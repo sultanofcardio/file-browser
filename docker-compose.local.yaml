@@ -1,0 +1,35 @@
+version: '2'
+services:
+  file-browser:
+    image: filebrowser/filebrowser
+    container_name: file-browser
+    hostname: ${hostname}
+    restart: unless-stopped
+    entrypoint: []
+    command: ["sh", "-c", "/filebrowser --username $${username} --password $$(/filebrowser hash $${password})"]
+    ports:
+      - "8080:80/tcp"
+    expose:
+      - 80
+    environment:
+      - username
+      - password
+      - VIRTUAL_HOST=${hostname}
+      - VIRTUAL_PORT=80
+      - LETSENCRYPT_HOST=${hostname}
+      - LETSENCRYPT_EMAIL
+      - FB_ADDRESS=0.0.0.0
+      - FB_PORT=80
+      - FB_ROOT=/srv
+      - FB_DATABASE=/filebrowser.db
+      - FB_LOGS=stdout
+    volumes:
+      - ./files:/srv
+      - ./filebrowser.db:/filebrowser.db
+    network_mode: bridge
+volumes:
+  conf:
+  vhost:
+  html:
+  certs:
+  acme:
