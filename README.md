@@ -48,4 +48,4 @@ mkdir -p files
 docker-compose up -d
 ```
 
-Then you'll be able to access the web interface at https://<server-hostname>
+Then you'll be able to access the web interface at https://server-hostname
